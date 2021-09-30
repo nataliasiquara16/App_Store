@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.appstore.Model.salesmodel;
+import com.example.appstore.setting.setFirebase;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
@@ -32,6 +33,9 @@ public class newsale extends AppCompatActivity {
     private Button btn_register;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
+    private salesmodel s;
+    public HashMap<String,String> hash;
+
 
 
     // conectando o arquivo java com o XML.
@@ -49,27 +53,38 @@ public class newsale extends AppCompatActivity {
         edit_value = findViewById(R.id.edit_value);
         btn_register = findViewById(R.id.btn_register);
 
-        // registrando os valores ao botão ser clicado
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String getName = edit_name.getText().toString();
-                String getProduct = edit_product.getText().toString();
-                String getValue = edit_value.getText().toString();
-
-                HashMap<String, Object> hashMap = new HashMap<>();
-                hashMap.put("Name", getName);
-                hashMap.put("Product", getProduct);
-                hashMap.put("Value", getValue);
-
-                // salvando no firebase
-                databaseReference.child("Users").child(getName).setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(newsale.this, "Sale added successfully", Toast.LENGTH_SHORT);
-                    }
-                });
+                recuperarDados();
+                salvarDados();
             }
         });
+
+    }
+     private void recuperarDados() {
+            if(edit_name.getText().toString()==""||edit_product.getText().toString()==""||edit_value.getText().toString()==""){
+                Toast.makeText(getApplicationContext(),"Register the sale", Toast.LENGTH_LONG);
+        }else{
+                s = new salesmodel();
+                s.setBuyer(edit_name.getText().toString());
+                s.setProduct(edit_product.getText().toString());
+                s.setValue(edit_value.getText().toString());
+                }
+    }
+
+    private void salvarDados() {
+        hash = new HashMap<>();
+        hash.put("Product",s.getProduct());
+        hash.put("Value",s.getValue());
+        DatabaseReference firebase = setFirebase.getFirebaseDatabase();
+        firebase.child("Users").child(s.getBuyer()).setValue(hash).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(getApplication(), "Sale added successfully", Toast.LENGTH_SHORT);
+            }
+        });
+
+
     }
 }

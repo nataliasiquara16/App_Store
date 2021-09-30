@@ -1,5 +1,8 @@
 package com.example.appstore.Model;
 
+import android.provider.ContactsContract;
+
+import com.example.appstore.setting.setFirebase;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -28,10 +31,12 @@ import java.lang.ref.Reference;
         }
 
         public void setId(String id) {
+
             this.id = id;
         }
 
         public String getBuyer() {
+
             return buyer;
         }
 
@@ -40,6 +45,7 @@ import java.lang.ref.Reference;
         }
 
         public String getProduct() {
+
             return product;
         }
 
@@ -51,7 +57,8 @@ import java.lang.ref.Reference;
             return value;
         }
 
-        public void setValue(String value) {this.value = value;}
-
+        public void setValue(String value) {
+            this.value = value;
+        }
 
     }

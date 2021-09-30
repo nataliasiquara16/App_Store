@@ -40,6 +40,7 @@
         android:layout_height="110dp"
         android:backgroundTint="#009688"
         android:text="Sales History"
+        android:onClick="botaohistory"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

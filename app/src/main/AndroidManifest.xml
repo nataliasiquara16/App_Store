@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".newsale" />
+        <activity android:name=".history" />
     </application>
 
 </manifest>
