@@ -21,4 +21,9 @@ public class MainActivity extends AppCompatActivity {
     public void botaohistory(View v) {
         startActivity(new Intent(this, com.example.appstore.history.class));
     }
+
+    // conectando o button com o arquivo java
+    public void botaodelete(View v) {
+        startActivity(new Intent(this, com.example.appstore.DeleteSale.class));
+    }
 }

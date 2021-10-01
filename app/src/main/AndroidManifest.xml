@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppStore">
         <activity
+            android:name=".DeleteSale"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -20,6 +23,7 @@
         </activity>
         <activity android:name=".newsale" />
         <activity android:name=".history" />
+
     </application>
 
 </manifest>

@@ -44,6 +44,7 @@ public class newsale extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newsale);
 
+        // conectando com o firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
 
@@ -53,6 +54,7 @@ public class newsale extends AppCompatActivity {
         edit_value = findViewById(R.id.edit_value);
         btn_register = findViewById(R.id.btn_register);
 
+        //Método para definir as funções ao clicar no botão
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,9 +65,11 @@ public class newsale extends AppCompatActivity {
 
     }
      private void recuperarDados() {
+        // checando se os dados foram preenchidos
             if(edit_name.getText().toString()==""||edit_product.getText().toString()==""||edit_value.getText().toString()==""){
                 Toast.makeText(getApplicationContext(),"Register the sale", Toast.LENGTH_LONG);
         }else{
+                //obtendo os valores inseridos
                 s = new salesmodel();
                 s.setBuyer(edit_name.getText().toString());
                 s.setProduct(edit_product.getText().toString());
@@ -74,9 +78,12 @@ public class newsale extends AppCompatActivity {
     }
 
     private void salvarDados() {
+        // usando o hashmap para atribuir a propriedade e o valor
         hash = new HashMap<>();
+        hash.put("Buyer",s.getBuyer());
         hash.put("Product",s.getProduct());
         hash.put("Value",s.getValue());
+        // salvando o valor no firebase
         DatabaseReference firebase = setFirebase.getFirebaseDatabase();
         firebase.child("Users").child(s.getBuyer()).setValue(hash).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
