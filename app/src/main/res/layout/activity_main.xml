@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FCFFFF"
+    android:background="#4CAF50"
     android:backgroundTint="#4CAF50"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity">/
 
     <TextView
         android:id="@+id/App"
-        android:layout_width="248dp"
-        android:layout_height="119dp"
-        android:text="APP"
+        android:layout_width="260dp"
+        android:layout_height="217dp"
+        android:text="APP STORE"
+        android:textAlignment="center"
         android:textColor="#000000"
-        android:textSize="96sp"
+        android:textSize="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -23,58 +24,58 @@
         app:layout_constraintVertical_bias="0.223" />
 
     <TextView
-        android:id="@+id/store"
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="STORE"
-        android:textColor="#040303"
-        android:textSize="96sp"
+        android:text="SELLER ACCESS"
+        android:textSize="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.477"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.55" />
+
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="245dp"
+        android:layout_height="53dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Email"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.451"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.653" />
+
+    <EditText
+        android:id="@+id/editTextSenha"
+        android:layout_width="245dp"
+        android:layout_height="53dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:text="Password"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.451"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.752" />
 
     <Button
-        android:id="@+id/saleshistory"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:backgroundTint="#009688"
-        android:text="Sales History"
-        android:onClick="botaohistory"
+        android:text="Login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.858" />
+        app:layout_constraintVertical_bias="0.888" />
 
-    <Button
-        android:id="@+id/newsale"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:backgroundTint="#009688"
-        android:text="New Sale"
-        android:onClick="botaosale"
-        app:iconTint="#E91E63"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.858" />
 
-    <Button
-        android:id="@+id/delete"
-        android:onClick="botaodelete"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:backgroundTint="#009688"
-        android:text="Delete sale"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.946"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.858" />
 </androidx.constraintlayout.widget.ConstraintLayout>

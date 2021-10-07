@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".newsale" />
-        <activity android:name=".history" />
+        <activity android:name=".history"/>
+        <activity android:name=".Main" />
 
     </application>
 
