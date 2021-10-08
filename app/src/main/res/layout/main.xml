@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#4CAF50"
-    android:backgroundTint="#4CAF50">
+    android:backgroundTint="#1956B4">
 
 
     <TextView
@@ -13,57 +13,68 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MENU"
+        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.472"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.385" />
+        app:layout_constraintVertical_bias="0.186" />
 
     <Button
         android:id="@+id/saleshistory"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:backgroundTint="#009688"
-        android:text="Sales History"
+        android:layout_width="317dp"
+        android:layout_height="70dp"
+        android:backgroundTint="#FFFFFF"
         android:onClick="botaohistory"
+        android:text="Sales History"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.858" />
+        app:layout_constraintVertical_bias="0.499" />
 
     <Button
         android:id="@+id/newsale"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:backgroundTint="#009688"
-        android:text="New Sale"
+        android:layout_width="317dp"
+        android:layout_height="70dp"
+        android:backgroundTint="#FFFFFF"
         android:onClick="botaosale"
+        android:text="New Sale"
         app:iconTint="#E91E63"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.858" />
+        app:layout_constraintVertical_bias="0.373" />
 
     <Button
         android:id="@+id/delete"
+        android:layout_width="317dp"
+        android:layout_height="70dp"
+        android:backgroundTint="#FFFFFF"
         android:onClick="botaodelete"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:backgroundTint="#009688"
         android:text="Delete sale"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.946"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.858" />
+        app:layout_constraintVertical_bias="0.627" />
+
+    <Button
+        android:id="@+id/btn_picture"
+        android:layout_width="317dp"
+        android:layout_height="70dp"
+        android:backgroundTint="#FFFFFF"
+        android:onClick="btn_picture"
+        android:text="Registre the product"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.748" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

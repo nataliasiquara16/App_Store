@@ -30,4 +30,9 @@ public class Main extends AppCompatActivity {
         startActivity(new Intent(this, com.example.appstore.DeleteSale.class));
     }
 
+    // conectando o button com o arquivo java
+    public void btn_picture(View v) {
+        startActivity(new Intent(this, com.example.appstore.registreproduct.class));
+    }
+
 }
