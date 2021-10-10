@@ -5,6 +5,8 @@
     <uses-feature android:name="android.hardware.camera"
         android:required="true" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/icone_appstore"
@@ -29,6 +31,15 @@
         <activity android:name=".history"/>
         <activity android:name=".Main" />
         <activity android:name=".registreproduct" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.appstore.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
 
     </application>
 
