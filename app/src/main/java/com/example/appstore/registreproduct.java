@@ -16,6 +16,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import com.bumptech.glide.Glide;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -55,11 +57,11 @@ public class registreproduct extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            Bitmap takenImage = BitmapFactory.decodeFile(currentPhotoPath);
             //colocando a imagem em uma imagemview
             ImageView iv_image;
             iv_image=findViewById(R.id.iv_image);
-            iv_image.setImageBitmap(takenImage);
+
+            Glide.with(this).load(currentPhotoPath).into(iv_image);
 
             //mostrando o nome do arquivo no text view
             TextView tv_message;
