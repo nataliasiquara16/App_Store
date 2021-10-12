@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +34,7 @@ public class registreproduct extends AppCompatActivity {
     private ImageView iv_image;
     static final int REQUEST_TAKE_PHOTO = 1;
     String currentPhotoPath;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,5 +109,6 @@ public class registreproduct extends AppCompatActivity {
         // salvando o arquivo
         currentPhotoPath = image.getAbsolutePath();
         return image;
+
     }
 }
