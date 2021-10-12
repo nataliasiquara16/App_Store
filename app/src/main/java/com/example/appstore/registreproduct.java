@@ -13,15 +13,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.UploadTask;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -35,6 +44,7 @@ public class registreproduct extends AppCompatActivity {
     static final int REQUEST_TAKE_PHOTO = 1;
     String currentPhotoPath;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private DatabaseReference database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +118,33 @@ public class registreproduct extends AppCompatActivity {
 
         // salvando o arquivo
         currentPhotoPath = image.getAbsolutePath();
+        uploadImagem();
         return image;
 
     }
-}
+
+    private void uploadImagem() {
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference imagesRef = storageRef.child("images");
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        StorageReference fileRef = imagesRef.child(imageFileName);
+
+        UploadTask uploadTask = fileRef.putFile(Uri.fromFile(new File(currentPhotoPath)));
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // caso der erro
+                Toast.makeText(registreproduct.this,"Error in Upload",Toast.LENGTH_SHORT).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Task<Uri> downloadUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+                Toast.makeText(registreproduct.this, "Upload finished!", Toast.LENGTH_SHORT).show();
+
+            };
+
+        });
+    }
+};
