@@ -88,7 +88,7 @@ public class newsale extends AppCompatActivity {
         firebase.child("Users").child(s.getBuyer()).setValue(hash).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(getApplication(), "Sale added successfully", Toast.LENGTH_SHORT);
+                Toast.makeText(newsale.this, "Sale added successfully", Toast.LENGTH_SHORT);
             }
         });
 

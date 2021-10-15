@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -37,8 +38,6 @@ import java.util.Date;
 public class registreproduct extends AppCompatActivity {
 
     private Button btn_take;
-    private Button btn_list;
-    private Button btn_load;
     private TextView tv_message;
     private ImageView iv_image;
     static final int REQUEST_TAKE_PHOTO = 1;
@@ -52,9 +51,7 @@ public class registreproduct extends AppCompatActivity {
         setContentView(R.layout.registreproduct);
 
         // associando as variaveis aos ids
-        btn_list = findViewById(R.id.btn_list);
         btn_take= findViewById(R.id.btn_take);
-        btn_load = findViewById(R.id.btn_list);
         iv_image = findViewById(R.id.iv_image);
         tv_message = findViewById(R.id.tv_message);
 
@@ -73,6 +70,7 @@ public class registreproduct extends AppCompatActivity {
             //colocando a imagem em uma imagemview
             ImageView iv_image;
             iv_image=findViewById(R.id.iv_image);
+
 
             Glide.with(this).load(currentPhotoPath).into(iv_image);
 
@@ -112,8 +110,8 @@ public class registreproduct extends AppCompatActivity {
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  //prefixo
-                ".jpg",         //sufixo
-                storageDir      //diretorio
+                ".jpg",   //sufixo
+                storageDir     //diretorio
         );
 
         // salvando o arquivo
@@ -140,11 +138,11 @@ public class registreproduct extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Task<Uri> downloadUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+                String downloadUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
                 Toast.makeText(registreproduct.this, "Upload finished!", Toast.LENGTH_SHORT).show();
 
             };
 
-        });
-    }
-};
+        });}}
+
+
