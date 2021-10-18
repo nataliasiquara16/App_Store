@@ -80,7 +80,7 @@ public class registreproduct extends AppCompatActivity {
             tv_message.setText(currentPhotoPath);
         }
     }
-// método para salvar o arquivo
+    // método para salvar o arquivo
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -144,5 +144,3 @@ public class registreproduct extends AppCompatActivity {
             };
 
         });}}
-
-

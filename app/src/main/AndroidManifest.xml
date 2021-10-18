@@ -30,6 +30,7 @@
         <activity android:name=".history"/>
         <activity android:name=".Main" />
         <activity android:name=".registreproduct" />
+        <activity android:name=".loadproduct" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.appstore.fileprovider"
