@@ -42,7 +42,6 @@ public class loadproduct extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showfileSelected();
-                uploadImage();
             }
 
             // metodo para selecionar a imagem
@@ -51,6 +50,7 @@ public class loadproduct extends AppCompatActivity {
                 intent.setType("image/*");
                 intent.setAction(intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select a image of product"), PICK_IMAGE_REQUEST);
+                uploadImage();
             }
 
             //metodo para fazer o upload da imagem no Firebase Storage
