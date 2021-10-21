@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -92,8 +93,12 @@ public class registerproduct extends AppCompatActivity {
             TextView tv_message;
             tv_message = findViewById(R.id.tv_message);
             tv_message.setText(currentPhotoPath);
-            Uri takePhoto = Uri.parse(currentPhotoPath); //extraindo o Uri do arquivo
-        }
+            File f = new File(currentPhotoPath);
+            Uri contentUri = Uri.fromFile(f);
+
+            sendPhoto1(f.getName(),contentUri);
+            }
+
         // caso a foto seja selecionado na galeria
         if (requestCode == SELECT_A_PHOTO && resultCode == RESULT_OK){
             Uri selectedPhoto = data.getData();
@@ -101,6 +106,27 @@ public class registerproduct extends AppCompatActivity {
             tv_message.setText(selectedPhoto.toString());
             sendPhoto2(selectedPhoto);
         }
+    }
+
+  private void sendPhoto1(String name, Uri contentUri) {
+        final StorageReference ref = storageReference.child("pictures/" + name);
+        ref.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(getApplicationContext(), "Upload Successfull", Toast.LENGTH_SHORT).show();
+                ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+
+                    }
+                });
+            }
+        } ).addOnFailureListener( new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "Upload Failed", Toast.LENGTH_SHORT).show();
+            }
+        } );
     }
 
     //metodo para salvar a imagem selecionado
