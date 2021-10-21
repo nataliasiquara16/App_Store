@@ -34,10 +34,8 @@ import java.util.Date;
 
 public class registerproduct extends AppCompatActivity {
 
-    private Button btn_test;
     private Button btn_take;
     private Button btn_load;
-    private TextView tv_message;
     private ImageView iv_image;
     static final int REQUEST_TAKE_PHOTO = 1;
     static final int SELECT_A_PHOTO = 2;
@@ -52,22 +50,12 @@ public class registerproduct extends AppCompatActivity {
         setContentView(R.layout.registreproduct);
 
         // associando as variaveis aos ids
-        btn_test = findViewById(R.id.btn_test);
         iv_image = findViewById(R.id.iv_image);
-        tv_message = findViewById(R.id.tv_message);
         btn_take = findViewById(R.id.btn_take);
         btn_load = findViewById(R.id.btn_load);
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
-        // método para o botão test
-        btn_test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                dispatchTakePictureIntent(); //abre a camera
-            }
-        });
         //método para botão take
         btn_take.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,11 +74,12 @@ public class registerproduct extends AppCompatActivity {
         });
     }
 
+    //metodo para permitir acesso a camera/memoria
     private void askpermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},CAMERA_PERM_CODE);
     } else {
-            dispatchTakePictureIntent();
+            dispatchTakePictureIntent(); //abrir camera
 
     }
         }
@@ -114,12 +103,8 @@ public class registerproduct extends AppCompatActivity {
             iv_image = findViewById(R.id.iv_image);
             Glide.with(this).load(currentPhotoPath).into(iv_image);
             //mostrando o nome do arquivo no text view
-            TextView tv_message;
-            tv_message = findViewById(R.id.tv_message);
-            tv_message.setText(currentPhotoPath);
             File f = new File(currentPhotoPath);
             Uri contentUri = Uri.fromFile(f);
-
             sendPhoto1(f.getName(),contentUri);
             }
 
@@ -127,13 +112,13 @@ public class registerproduct extends AppCompatActivity {
         if (requestCode == SELECT_A_PHOTO && resultCode == RESULT_OK){
             Uri selectedPhoto = data.getData();
             Glide.with(this).load(selectedPhoto).into(iv_image);
-            tv_message.setText(selectedPhoto.toString());
-            sendPhoto2(selectedPhoto);
+            String filename = selectedPhoto.toString();
+            sendPhoto2(filename, selectedPhoto);
         }
     }
 
   private void sendPhoto1(String name, Uri contentUri) {
-        final StorageReference ref = storageReference.child("pictures/" + name);
+        final StorageReference ref = storageReference.child("Taken Photos/" + name);
         ref.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -141,7 +126,6 @@ public class registerproduct extends AppCompatActivity {
                 ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-
                     }
                 });
             }
@@ -154,8 +138,8 @@ public class registerproduct extends AppCompatActivity {
     }
 
     //metodo para salvar a imagem selecionado
-    private void sendPhoto2(Uri selectedPhoto) {
-        StorageReference ref = storageReference.child("images/");
+    private void sendPhoto2(String filename, Uri selectedPhoto) {
+        StorageReference ref = storageReference.child("Photos of gallery/" + filename);
         ref.putFile(selectedPhoto).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -193,7 +177,7 @@ public class registerproduct extends AppCompatActivity {
     }
 
     //criando o arquivo
-    private File createImageFile() throws IOException {
+    public File createImageFile() throws IOException {
         // criando o nome do arquivo
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
