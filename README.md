@@ -59,16 +59,25 @@ Atividade History Sale: Nessa atividade, é exibido o histórico de vendas.
 
 ### Atividade  Registre the product
 
- Nessa atividade, o usuário pode fotografar o produto, o qual será exibido na imagemview e o seu URI no textview.
- 
+ Nessa atividade, o usuário pode tirar uma foto do produto ou escolher uma foto da galeria, ambas serão exibidas em uma imagem view e salvas.  
   <div align="center">
-<img src="https://user-images.githubusercontent.com/90353434/137040873-3048ca1f-3a98-4e24-baa8-eeb7ad5ce328.jpeg" width="300px" />
+<img src="https://user-images.githubusercontent.com/90353434/138371889-33d8f01e-ce85-4988-97a2-8a99cddb2d03.jpeg" width="300px" />
+</div>
+
+<div align="center">
+<img src="https://user-images.githubusercontent.com/90353434/138371991-8a43d22d-a0cf-4323-8953-7026a2dd0efd.jpeg" width="300px" />
 </div>
 
 A imagem será salva no Storage. 
 
   <div align="center">
-<img src="https://user-images.githubusercontent.com/90353434/137041102-b1e5dae5-d3e5-4548-a373-7bc12052febc.jpg" width="300px" />
+<img src="https://user-images.githubusercontent.com/90353434/138372238-f7a98cc5-2d80-47ea-a3a1-46b1e19200c2.jpg" width="800px" />
+</div>
+
+Pode-se visualizar a imagem da seguinte forma:
+
+  <div align="center">
+<img src="https://user-images.githubusercontent.com/90353434/138372378-5e170d28-12eb-4ee1-a6f2-016d0b2a4494.jpg" width="800px" />
 </div>
 
  ### Atualizações
@@ -79,15 +88,13 @@ A imagem será salva no Storage.
 - Função de tirar foto e exibir.
 - Crashlytics
 - Storage.
+- Service/Broadcast
  
  ### Erros e possíveis melhorias
 
 - Melhoria do Design
-- Correção da Classe Toast, visto que a mensagem não está sendo exibida.
 - Correção na Atividade New sale, pois os campos não são limpos após o registro.
 - Erro da Atividade Delete, pois não está funcionando.  Ao clicar no botão “Delete” a função não é executada.
-- Falta na implementação do Broadcast/Service.
-- Erro na obtenção do URL do Storage.
 
 ### Tecnologia Utilizada
 - Java
