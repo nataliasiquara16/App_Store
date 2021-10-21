@@ -11,33 +11,34 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.storage.UploadTask;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class registreproduct extends AppCompatActivity {
+public class registerproduct extends AppCompatActivity {
 
+    private Button btn_test;
     private Button btn_take;
+    private Button btn_load;
     private TextView tv_message;
     private ImageView iv_image;
     static final int REQUEST_TAKE_PHOTO = 1;
-    private StorageReference storage;
-    private DatabaseReference database;
-    private Uri photoURI;
+    static final int SELECT_A_PHOTO = 2;
     String currentPhotoPath;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,41 +46,67 @@ public class registreproduct extends AppCompatActivity {
         setContentView(R.layout.registreproduct);
 
         // associando as variaveis aos ids
-        btn_take= findViewById(R.id.btn_test);
+        btn_test = findViewById(R.id.btn_test);
         iv_image = findViewById(R.id.iv_image);
         tv_message = findViewById(R.id.tv_message);
+        btn_take = findViewById(R.id.btn_take);
+        btn_load = findViewById(R.id.btn_load);
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
-        // declarando metodo para quando clicar no Botao Take, a camera seja iniciada.
+        // método para o botão test
+        btn_test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dispatchTakePictureIntent(); //abre a camera
+            }
+        });
+        //método para botão take
         btn_take.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dispatchTakePictureIntent();
+
+                dispatchTakePictureIntent(); //abre a camera
+            }
+        });
+        //metodo para botão load
+        btn_load.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i,2); //selecionando a imagem da galeria
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK && data != null) {
-            photoURI= data.getData();
+        // caso a foto seja tirada
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             //colocando a imagem em uma imagemview
-            ImageView iv_image;
-            iv_image=findViewById(R.id.iv_image);
-            Glide.with(this).load(data).into(iv_image);
-
+            iv_image = findViewById(R.id.iv_image);
+            Glide.with(this).load(currentPhotoPath).into(iv_image);
             //mostrando o nome do arquivo no text view
             TextView tv_message;
-            tv_message= findViewById(R.id.tv_message);
+            tv_message = findViewById(R.id.tv_message);
             tv_message.setText(currentPhotoPath);
-
-            sendPhoto(photoURI);
+            Uri takePhoto = Uri.parse(currentPhotoPath); //extraindo o Uri do arquivo
+        }
+        // caso a foto seja selecionado na galeria
+        if (requestCode == SELECT_A_PHOTO && resultCode == RESULT_OK){
+            Uri selectedPhoto = data.getData();
+            Glide.with(this).load(selectedPhoto).into(iv_image);
+            tv_message.setText(selectedPhoto.toString());
+            sendPhoto2(selectedPhoto);
         }
     }
 
-    private void sendPhoto(Uri photoURI) {
-        StorageReference filepath = storage.child("Photos").child( this.photoURI.getLastPathSegment());
-        filepath.putFile(this.photoURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+    //metodo para salvar a imagem selecionado
+    private void sendPhoto2(Uri selectedPhoto) {
+        StorageReference ref = storageReference.child("images/");
+        ref.putFile(selectedPhoto).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(getApplicationContext(), "Upload Successfull", Toast.LENGTH_SHORT).show();
@@ -92,7 +119,7 @@ public class registreproduct extends AppCompatActivity {
         } );
     }
 
-    // método para salvar o arquivo
+    // método para tirar a foto
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -102,7 +129,7 @@ public class registreproduct extends AppCompatActivity {
                 photoFile = createImageFile();
             } catch (IOException ex) {
                 // caso der erro
-                Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
             }
             // se o arquivo for salvo com sucesso
             if (photoFile != null) {
@@ -115,6 +142,7 @@ public class registreproduct extends AppCompatActivity {
         }
     }
 
+    //criando o arquivo
     private File createImageFile() throws IOException {
         // criando o nome do arquivo
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -131,6 +159,5 @@ public class registreproduct extends AppCompatActivity {
         return image;
 
     }
+}
 
-
-        }

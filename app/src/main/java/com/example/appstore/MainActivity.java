@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextSenha;
     private Button login;
     private FirebaseAuth mAuth;
-    public static final String Countdown= "com.example.appstore.countdown_br2";
+    public static final String CONNECT = "Intent.ACTION_INTERNET_CONNECTED";
+    public static final String DISCONNECT = "Intent.ACTION_INTERNET_DISCONNECTED";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,21 +52,21 @@ public class MainActivity extends AppCompatActivity {
                 String LoginSenha = editTextSenha.getText().toString();
                 if(!TextUtils.isEmpty(LoginEmail)|| !TextUtils.isEmpty(LoginSenha)){
                     mAuth.signInWithEmailAndPassword(LoginEmail,LoginSenha)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                abrirMenu();
-                            }else{
-                                    String error = task.getException().getMessage();
-                                    Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        abrirMenu();
+                                    }else{
+                                        String error = task.getException().getMessage();
+                                        Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
-                    };
-                }
-            });
-        Intent bi = new Intent(Countdown);
+                            });
+                };
+            }
+        });
+        Intent bi = new Intent(CONNECT);
         sendBroadcast(bi);
     };
 
@@ -78,21 +79,25 @@ public class MainActivity extends AppCompatActivity {
     public final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.i("CALLED","mGattUpdateReceiver");
+            Log.i("broadcast1","mGattUpdateReceiver");
             final String action = intent.getAction();
-            Log.i("INTENT",String.valueOf (intent));
+            Log.i("broadcast2",String.valueOf (intent));
             String status;
-            if (MainActivity.Countdown.equals(action)){
-                Log.i("Broadcast", "teste");
+            if (CONNECT.equals(action)){
+                Log.i("Broadcast", "Internet Connected!");
+            }else if (DISCONNECT.equals(action)){
+                Log.i("Broadcast", "No Internet Connected!");
             }
         }
     };
 
     private static IntentFilter makeGattUpdateIntentFilter() {
-        Log.i("CALLED","makeGattUpdateIntentFilter");
+        Log.i("broadcast-F","makeGattUpdateIntentFilter");
         final IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(MainActivity.Countdown);
+        intentFilter.addAction(CONNECT);
+        intentFilter.addAction(DISCONNECT);
         return intentFilter;
 
+    }
 }
-}
+

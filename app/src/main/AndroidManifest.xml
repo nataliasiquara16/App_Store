@@ -29,9 +29,8 @@
         <activity android:name=".newsale" />
         <activity android:name=".history"/>
         <activity android:name=".Main" />
-        <activity android:name=".registreproduct" />
-        <activity android:name=".loadproduct" />
-        <activity android:name=".testcamera"/>
+        <activity android:name=".takepicture"/>
+        <activity android:name=".registerproduct"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.appstore.fileprovider"
