@@ -1,6 +1,8 @@
 package com.example.appstore;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,6 +16,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.bumptech.glide.Glide;
@@ -40,6 +44,7 @@ public class registerproduct extends AppCompatActivity {
     String currentPhotoPath;
     private FirebaseStorage storage;
     private StorageReference storageReference;
+    static final int CAMERA_PERM_CODE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +72,9 @@ public class registerproduct extends AppCompatActivity {
         btn_take.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                dispatchTakePictureIntent(); //abre a camera
+                askpermissions(); // pede permissão para usar a camera
             }
+
         });
         //metodo para botão load
         btn_load.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +84,25 @@ public class registerproduct extends AppCompatActivity {
                 startActivityForResult(i,2); //selecionando a imagem da galeria
             }
         });
+    }
+
+    private void askpermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},CAMERA_PERM_CODE);
+    } else {
+            dispatchTakePictureIntent();
+
+    }
+        }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grandResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grandResults);
+        if (requestCode == CAMERA_PERM_CODE) {
+            if (grandResults.length < 0 && grandResults[0] == PackageManager.PERMISSION_GRANTED) {
+                dispatchTakePictureIntent();
+            }
+        }
     }
 
     @Override
